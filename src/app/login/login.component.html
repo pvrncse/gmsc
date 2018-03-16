@@ -1,0 +1,25 @@
+<mat-card>
+    <mat-card-title>Welcome to GMSC</mat-card-title>
+    <mat-card-subtitle>Please Login</mat-card-subtitle>
+    <form (ngSubmit)="submitFields()">
+        <mat-card-content>
+            <div class="example-container">
+                <mat-form-field>
+                    <input matInput placeholder="User Name" dividerColor="accent" [(ngModel)]="name" type="text" name="name" required autofocus autocomplete="off">
+                </mat-form-field><br/>
+                <mat-form-field>
+                    <input matInput placeholder="Password" dividerColor="accent" [(ngModel)]="password" type="password" name="password" required>
+                </mat-form-field><br/>
+            </div>
+            <mat-card-subtitle *ngIf="invalidUser">
+                <p class="invalid">Oops.. Invalid User</p>
+            </mat-card-subtitle>
+        </mat-card-content>
+        <div class="example-container">
+            <mat-card-actions>
+                <button type="submit" mat-raised-button color="primary">Login</button>
+                <button type="reset" (click)="resetFields()" mat-raised-button>Reset</button>
+            </mat-card-actions>
+        </div>
+    </form>
+</mat-card>

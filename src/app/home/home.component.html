@@ -1,0 +1,103 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>GMSC</span>
+        <span class="example-spacer"></span>
+        <button mat-button>About</button>
+        <button mat-button (click)="logMeOut()">Logout</button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<!-- <div class="example-container">
+    <mat-form-field>
+        <input matInput placeholder="Input">
+    </mat-form-field>
+</div> -->
+<!-- <button mat-raised-button (click)="isLinear = true" id="toggle-linear">Enable linear mode</button> -->
+
+<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Project Name</ng-template>
+            <div class="example-container">
+                <mat-form-field>
+                    <input matInput placeholder="Enter Project Name" formControlName="firstCtrl" required>
+                </mat-form-field>
+            </div>
+            <div class="footer-actions">
+                <button mat-button matStepperNext color="primary">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Technologies</ng-template>
+            <div class="example-container">
+                <mat-form-field>
+                    <input matInput placeholder="Severside" formControlName="Servercode" required>
+                </mat-form-field>
+            </div>
+            <div class="example-container">
+                <mat-form-field>
+                    <input matInput placeholder="Database" formControlName="Database" required>
+                </mat-form-field>
+            </div>
+            <div class="footer-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext color="primary">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>Node modules</ng-template>
+            <div class="example-container">
+                <!-- <mat-form-field>
+                    <input matInput placeholder="node modules" formControlName="Nodemodules" required>
+                </mat-form-field> -->
+                <mat-form-field>
+                    <mat-select placeholder="Select Modules" [formControl]="modules" multiple>
+                        <mat-option *ngFor="let module of moduleList" [value]="module">{{module}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-button (click)="loadModule()">Click Here</button>
+            </div>
+            <!-- <div class="example-container">
+                    <mat-form-field>
+                        <input matInput placeholder="Database" formControlName="Database" required>
+                    </mat-form-field>
+                </div> -->
+            <div class="footer-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext color="primary">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="fourthFormGroup">
+        <form [formGroup]="fourthFormGroup">
+            <ng-template matStepLabel>DB Configuration</ng-template>
+            <div class="example-container">
+                <mat-form-field>
+                    <input matInput placeholder="Table Name" formControlName="Tablename" required>
+                </mat-form-field>
+            </div>
+            {{someDataFromService}}
+            <!-- <div class="example-container">
+                        <mat-form-field>
+                            <input matInput placeholder="Database" formControlName="Database" required>
+                        </mat-form-field>
+                    </div> -->
+            <div class="footer-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext color="primary">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div class="footer-actions">
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+            <!-- <button mat-raised-button color="primary">Export</button> -->
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
