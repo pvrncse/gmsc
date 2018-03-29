@@ -13,53 +13,74 @@
 </div> -->
 <!-- <button mat-raised-button (click)="isLinear = true" id="toggle-linear">Enable linear mode</button> -->
 
-<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+<mat-horizontal-stepper #stepper="matHorizontalStepper">
     <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
+        <form>
             <ng-template matStepLabel>Project Name</ng-template>
             <div class="example-container">
                 <mat-form-field>
-                    <input matInput placeholder="Enter Project Name" formControlName="firstCtrl" required>
+                    <input [(ngModel)]="Obj.projectName" matInput placeholder="Enter Project Name" name="projectName" required>
                 </mat-form-field>
             </div>
             <div class="footer-actions">
-                <button mat-button matStepperNext color="primary">Next</button>
+                <button mat-button color="primary" (click)="goForward(stepper,1)">Next</button>
             </div>
         </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
+        <form>
             <ng-template matStepLabel>Technologies</ng-template>
             <div class="example-container">
                 <mat-form-field>
-                    <input matInput placeholder="Severside" formControlName="Servercode" required>
+                    <input [(ngModel)]="Obj.serverSide " name="serverside" matInput placeholder="Severside" required>
                 </mat-form-field>
             </div>
             <div class="example-container">
                 <mat-form-field>
-                    <input matInput placeholder="Database" formControlName="Database" required>
+                    <input [(ngModel)]="Obj.dataBase " name="database" matInput placeholder="Database" required>
                 </mat-form-field>
             </div>
             <div class="footer-actions">
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext color="primary">Next</button>
+                <button mat-button (click)="goForward(stepper,2)" color="primary">Next</button>
             </div>
         </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
+        <form>
             <ng-template matStepLabel>Node modules</ng-template>
             <div class="example-container">
-                <!-- <mat-form-field>
-                    <input matInput placeholder="node modules" formControlName="Nodemodules" required>
-                </mat-form-field> -->
                 <mat-form-field>
-                    <mat-select placeholder="Select Modules" [formControl]="modules" multiple>
-                        <mat-option *ngFor="let module of moduleList" [value]="module">{{module}}</mat-option>
-                    </mat-select>
+                    <textarea name="addedModules" [(ngModel)]="Obj.addedModules" matInput placeholder="List of Selected Modules.." readonly></textarea>
                 </mat-form-field>
-                <button mat-button (click)="loadModule()">Click Here</button>
             </div>
+            <div class="example-container">
+                <mat-form-field>
+                    <input matInput name="search" placeholder="Select Modules" (keypress)="loadModule()" [(ngModel)]="search" required>
+                </mat-form-field>
+                <mat-selection-list>
+                    <mat-list-option *ngFor="let module of listOfNodeModules">
+                        <span title="{{module.data.description}}" (click)="clickItToUpdate(module.value)">{{module.value}}</span>
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+            <!-- <mat-grid-list cols="2" rowHeight="5:1">
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Select Modules" formControlName="modules" (keypress)="loadModule()" [(ngModel)]="search" required>
+                    </mat-form-field>
+                    <mat-selection-list>
+                        <mat-list-option *ngFor="let module of listOfNodeModules">
+                            <span title="{{module.data.description}}">{{module.value}}</span>
+                        </mat-list-option>
+                    </mat-selection-list>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <textarea matInput placeholder="List of Selected Modules.." readonly></textarea>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list> -->
             <!-- <div class="example-container">
                     <mat-form-field>
                         <input matInput placeholder="Database" formControlName="Database" required>
@@ -67,16 +88,16 @@
                 </div> -->
             <div class="footer-actions">
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext color="primary">Next</button>
+                <button mat-button (click)="goForward(stepper,3)" color="primary">Next</button>
             </div>
         </form>
     </mat-step>
     <mat-step [stepControl]="fourthFormGroup">
-        <form [formGroup]="fourthFormGroup">
+        <form>
             <ng-template matStepLabel>DB Configuration</ng-template>
             <div class="example-container">
                 <mat-form-field>
-                    <input matInput placeholder="Table Name" formControlName="Tablename" required>
+                    <input [(ngModel)]="Obj.tableNames" matInput placeholder="Table Name" name="tableNames" required>
                 </mat-form-field>
             </div>
             {{someDataFromService}}
@@ -92,11 +113,11 @@
         </form>
     </mat-step>
     <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        You are now done.
+        <ng-template matStepLabel>Export</ng-template>
+        You are now done, enjoy!!
         <div class="footer-actions">
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-button (click)="getAllInfoInJson()">Reset</button>
             <!-- <button mat-raised-button color="primary">Export</button> -->
         </div>
     </mat-step>
